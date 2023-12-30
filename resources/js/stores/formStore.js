@@ -1,18 +1,30 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useFieldStore } from "@/stores/fieldStore.js";
 
 export const useFormStore = defineStore('form', () => {
+    const fieldStore = useFieldStore();
+
     const form = ref({
         title: "Untitled Form",
         description: "Write something to describe this form.",
-        fields: []
+        fields: fieldStore.fields
     });
 
     function addField(type) {
         if (type === 'text') {
-            form.value.fields.push({
+            fieldStore.fields.push({
+                id: form.value.fields.length + 1,
                 type: 'text',
                 tag: `<input type="text" class="p-2 w-full rounded-lg">`
+            })
+        }
+
+        if (type === 'image') {
+            fieldStore.fields.push({
+                id: form.value.fields.length + 1,
+                type: 'file',
+                tag: `<input type="file" class="p-2 w-full rounded-lg">`
             })
         }
     }
@@ -21,5 +33,5 @@ export const useFormStore = defineStore('form', () => {
         form.value.fields.pop(field);
     }
 
-    return { form, addField, removeField };
+    return { form, addField, removeField, fieldStore };
 });
