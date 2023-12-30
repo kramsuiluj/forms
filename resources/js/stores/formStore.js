@@ -30,7 +30,15 @@ export const useFormStore = defineStore('form', () => {
     }
 
     function removeField(field) {
-        form.value.fields.pop(field);
+        let fieldIndex;
+
+        for (let i = 0; i < fieldStore.fieldsCount; i++) {
+            if (field === fieldStore.fields[i]) {
+                fieldIndex = i;
+            }
+        }
+
+        fieldStore.fields.splice(fieldIndex, 1);
     }
 
     return { form, addField, removeField, fieldStore };
