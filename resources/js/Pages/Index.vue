@@ -12,10 +12,11 @@ import IconEmptyBox from "@/Shared/Icons/IconEmptyBox.vue";
 import IconUpArrow from "@/Shared/Icons/IconUpArrow.vue";
 import IconDownArrow from "@/Shared/Icons/IconDownArrow.vue";
 import IconOnHover from "@/Shared/Icons/IconOnHover.vue";
-import {useFieldStore} from "@/stores/fieldStore.js";
+import { useFieldStore } from "@/stores/fieldStore.js";
+import { useCountStore } from "@/stores/countStore.js";
 
 const form = useFormStore();
-const fields = useFieldStore();
+const fieldActions = useCountStore();
 </script>
 
 <template>
@@ -42,12 +43,12 @@ const fields = useFieldStore();
             <IconImage fill="white" />
         </FormOption>
 
-        <FormOption>
+        <FormOption @click="form.addField('date')">
             <IconDate fill="white" />
         </FormOption>
     </FormOptions>
 
-    <FormFieldsContainer v-if="form.fieldStore.fieldsCount">
+    <FormFieldsContainer v-if="fieldActions.count">
         <div class="space-y-4">
             <div
                 v-for="field in form.form.fields"
@@ -65,7 +66,7 @@ const fields = useFieldStore();
 
                     <IconOnHover
                         class="hover:bg-gray-700"
-                        v-if="field !== form.form.fields[fields.fieldsLastIndex]"
+                        v-if="field !== form.form.fields[form.fieldStore.fieldsLastIndex]"
                         @click="form.fieldStore.moveDown(field)"
                     >
                         <IconDownArrow class="w-4 h-4" />

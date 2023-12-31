@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useFieldStore } from "@/stores/fieldStore.js";
+import { FormFieldTemplates } from "@/Shared/templates/FormFieldTemplates.js";
 
 export const useFormStore = defineStore('form', () => {
     const fieldStore = useFieldStore();
@@ -20,7 +21,7 @@ export const useFormStore = defineStore('form', () => {
             fieldStore.fields.push({
                 id: form.value.fields.length + 1,
                 type: 'text',
-                tag: `<input type="text" class="p-2 w-full rounded-lg">`
+                tag: FormFieldTemplates.text
             })
         }
 
@@ -28,7 +29,15 @@ export const useFormStore = defineStore('form', () => {
             fieldStore.fields.push({
                 id: form.value.fields.length + 1,
                 type: 'file',
-                tag: `<input type="file" class="p-2 w-full rounded-lg">`
+                tag: FormFieldTemplates.image
+            })
+        }
+
+        if (type === 'date') {
+            fieldStore.fields.push({
+                id: form.value.fields.length + 1,
+                type: 'date',
+                tag: FormFieldTemplates.date
             })
         }
 
