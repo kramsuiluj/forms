@@ -8,8 +8,12 @@ export const useFormStore = defineStore('form', () => {
     const form = ref({
         title: "Untitled Form",
         description: "Write something to describe this form.",
-        fields: fieldStore.fields
+        fields: []
     });
+
+    if (fieldStore.fields) {
+        form.value.fields = fieldStore.fields;
+    }
 
     function addField(type) {
         if (type === 'text') {
@@ -27,6 +31,8 @@ export const useFormStore = defineStore('form', () => {
                 tag: `<input type="file" class="p-2 w-full rounded-lg">`
             })
         }
+
+        console.log(fieldStore.fields);
     }
 
     function removeField(field) {

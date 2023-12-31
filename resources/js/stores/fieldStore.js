@@ -11,28 +11,31 @@ export const useFieldStore = defineStore('fields', () => {
     });
 
     const fieldsCount = computed(() => fields.value.length);
+    const fieldsLastIndex = computed(() => fields.value.length - 1);
 
-    let previousFieldIndex;
-    let currentFieldIndex;
-    let nextFieldIndex;
+    let previousFieldIndex = 0;
+    let currentFieldIndex = 0;
+    let nextFieldIndex = 0;
 
     function moveDown(field) {
-        if (field !== fields.value[fieldsCount]) {
-            for (let i = 0; i < fieldsCount.value; i++) {
-                if (field === fields.value[i]) {
-                    currentFieldIndex = i;
-                    nextFieldIndex = i + 1;
+        if (field !== undefined) {
+            if (field !== fields.value[fieldsCount]) {
+                for (let i = 0; i < fieldsCount.value; i++) {
+                    if (field === fields.value[i]) {
+                        currentFieldIndex = i;
+                        nextFieldIndex = i + 1;
+                    }
                 }
+
+                tempFields.value.current = fields.value[currentFieldIndex];
+                tempFields.value.next = fields.value[nextFieldIndex];
+
+                fields.value[currentFieldIndex] = tempFields.value.next;
+                fields.value[nextFieldIndex] = tempFields.value.current;
+
+                tempFields.value.current = {};
+                tempFields.value.next = {};
             }
-
-            tempFields.value.current = fields.value[currentFieldIndex];
-            tempFields.value.next = fields.value[nextFieldIndex];
-
-            fields.value[currentFieldIndex] = tempFields.value.next;
-            fields.value[nextFieldIndex] = tempFields.value.current;
-
-            tempFields.value.current = {};
-            tempFields.value.next = {};
         }
     }
 
@@ -60,6 +63,7 @@ export const useFieldStore = defineStore('fields', () => {
         currentFieldIndex,
         nextFieldIndex,
         fieldsCount,
+        fieldsLastIndex,
         moveDown,
         moveUp
     };

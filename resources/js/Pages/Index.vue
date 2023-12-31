@@ -12,8 +12,10 @@ import IconEmptyBox from "@/Shared/Icons/IconEmptyBox.vue";
 import IconUpArrow from "@/Shared/Icons/IconUpArrow.vue";
 import IconDownArrow from "@/Shared/Icons/IconDownArrow.vue";
 import IconOnHover from "@/Shared/Icons/IconOnHover.vue";
+import {useFieldStore} from "@/stores/fieldStore.js";
 
 const form = useFormStore();
+const fields = useFieldStore();
 </script>
 
 <template>
@@ -49,7 +51,7 @@ const form = useFormStore();
         <div class="space-y-4">
             <div
                 v-for="field in form.form.fields"
-                :key="field"
+                :key="field.id"
                 class="flex items-center space-x-4"
             >
                 <div class="mt-1" v-if="form.fieldStore.fieldsCount > 1">
@@ -63,7 +65,7 @@ const form = useFormStore();
 
                     <IconOnHover
                         class="hover:bg-gray-700"
-                        v-if="field !== form.form.fields[form.fieldStore.fieldsCount]"
+                        v-if="field !== form.form.fields[fields.fieldsLastIndex]"
                         @click="form.fieldStore.moveDown(field)"
                     >
                         <IconDownArrow class="w-4 h-4" />
