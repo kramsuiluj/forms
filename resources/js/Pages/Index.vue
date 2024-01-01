@@ -55,19 +55,19 @@ const fieldActions = useCountStore();
                 :key="field.id"
                 class="flex items-center space-x-4"
             >
-                <div class="mt-1" v-if="form.fieldStore.fieldsCount > 1">
+                <div class="mt-1" v-if="form.form.fields.length > 1">
                     <IconOnHover
                         class="hover:bg-gray-700"
                         v-if="field !== form.form.fields[0]"
-                        @click="form.fieldStore.moveUp(field)"
+                        @click="form.moveUp(field)"
                     >
                         <IconUpArrow class="w-4 h-4" />
                     </IconOnHover>
 
                     <IconOnHover
                         class="hover:bg-gray-700"
-                        v-if="field !== form.form.fields[form.fieldStore.fieldsLastIndex]"
-                        @click="form.fieldStore.moveDown(field)"
+                        v-if="field !== form.form.fields[form.fieldsLastIndex]"
+                        @click="form.moveDown(field)"
                     >
                         <IconDownArrow class="w-4 h-4" />
                     </IconOnHover>
@@ -80,7 +80,7 @@ const fieldActions = useCountStore();
         </div>
     </FormFieldsContainer>
 
-    <div class="grid place-items-center gap-2 mt-20" v-if="! form.fieldStore.fieldsCount">
+    <div class="grid place-items-center gap-2 mt-20" v-if="! form.form.fields.length">
         <p class="text-sm text-gray-300 italic">Your form is empty. Please place a field.</p>
 
         <IconEmptyBox class="text-gray-400 w-10" />
