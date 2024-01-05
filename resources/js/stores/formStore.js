@@ -8,6 +8,7 @@ export const useFormStore = defineStore('form', () => {
 
     // This is the state where I store my fields.
     const form = ref();
+    const fieldsValue = ref({});
 
     if (!read()) {
         form.value = fieldStore.defaultForm;
@@ -79,6 +80,7 @@ export const useFormStore = defineStore('form', () => {
 
     const fieldsCount = computed(() => form.value.fields.length);
     const fieldsLastIndex = computed(() => form.value.fields.length - 1);
+    const fieldId = computed(() => form.value.fields.length + 1);
 
     function write() {
         localStorage.setItem('form', JSON.stringify(form.value));
@@ -92,12 +94,27 @@ export const useFormStore = defineStore('form', () => {
         return JSON.parse(localStorage.getItem('form'));
     }
 
+    let binding;
+    let testBind = ref('Does it work?');
+
     function addField(type) {
         if (type === 'text') {
+            binding = 'text_' + fieldId.value;
+
+            fieldsValue.value[binding] = 'Success';
+
+            console.log(fieldsValue.value)
+
+
+
             form.value.fields.push({
-                id: form.value.fields.length + 1,
+                id: fieldId.value,
                 type: 'text',
-                tag: FormFieldTemplates.text
+                tag: `<input
+                        type="text"
+                        class="p-2 w-full rounded-lg"
+                      >
+                `
             })
         }
 

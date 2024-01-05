@@ -14,9 +14,14 @@ import IconDownArrow from "@/Shared/Icons/IconDownArrow.vue";
 import IconOnHover from "@/Shared/Icons/IconOnHover.vue";
 import { useFieldStore } from "@/stores/fieldStore.js";
 import { useCountStore } from "@/stores/countStore.js";
+import {onMounted, ref} from "vue";
 
 const form = useFormStore();
 const fieldActions = useCountStore();
+const itemRefs = ref([]);
+onMounted(() => {
+    console.log(itemRefs.value);
+});
 </script>
 
 <template>
@@ -73,7 +78,7 @@ const fieldActions = useCountStore();
                     </IconOnHover>
                 </div>
 
-                <div v-html="field.tag" class="w-full text-black" />
+<!--                <div v-html="field.tag" class="w-full text-black" ref="itemRefs" />-->
 
                 <button class="ml-5" @click="form.removeField(field)">&#x00D7;</button>
             </div>
