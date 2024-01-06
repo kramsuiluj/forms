@@ -15,6 +15,7 @@ import IconOnHover from "@/Shared/Icons/IconOnHover.vue";
 import { useFieldStore } from "@/stores/fieldStore.js";
 import { useCountStore } from "@/stores/countStore.js";
 import {onMounted, ref} from "vue";
+import FormField from "@/Shared/FormField.vue";
 
 const form = useFormStore();
 const fieldActions = useCountStore();
@@ -78,9 +79,8 @@ onMounted(() => {
                     </IconOnHover>
                 </div>
 
-<!--                <div v-html="field.tag" class="w-full text-black" ref="itemRefs" />-->
+                <FormField :field="field" />
 
-                <button class="ml-5" @click="form.removeField(field)">&#x00D7;</button>
             </div>
         </div>
     </FormFieldsContainer>

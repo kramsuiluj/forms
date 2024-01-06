@@ -1,11 +1,17 @@
 <script setup>
 import { ref } from "vue";
 import ToggleSwitch from "@/Shared/ToggleSwitch.vue";
+import IconDownArrow from "@/Shared/Icons/IconDownArrow.vue";
+import IconDelete from "@/Shared/Icons/IconDelete.vue";
+import { useFormStore } from "@/stores/formStore.js";
 
+const form = useFormStore();
 let show = ref(false);
 let dropdown;
 const selected = ref('Short Answer');
 const checked = ref(false);
+
+defineProps({ field: Object });
 
 function select(option) {
     selected.value = option;
@@ -25,18 +31,20 @@ document.addEventListener('click', (event) => {
 </script>
 
 <template>
-    <div class="max-w-lg mx-auto">
+    <div class="w-full">
         <section>
-            <div class="border border-gray-700 p-4 mt-10">
+            <div class="border-b-2 border-gray-700 p-4">
                 <div class="flex justify-between items-center">
-                    <input type="text" placeholder="Write down a question." class="w-2/3 p-2">
+                    <input type="text" placeholder="Write down a question." class="w-2/3 p-2 text-black">
 
                     <div class="relative text-gray-300 text-sm" ref="dropdown">
                         <button
                             @click.prevent="show = ! show"
-                            class="border p-2 bg-gray-800 border-gray-700 w-32"
+                            class="border p-2 bg-gray-800 border-gray-700 w-32 font-semibold flex items-end justify-between"
                         >
                             {{ selected }}
+
+                            <IconDownArrow class="w-4 h-4 ml-2"/>
                         </button>
 
                         <ul v-show="show" class="absolute left-0 bg-gray-800 border border-gray-700 w-full mt-1">
@@ -50,7 +58,10 @@ document.addEventListener('click', (event) => {
 
                 <footer class="mt-10 border-t border-gray-700 flex justify-end">
                     <div class="mt-4 flex space-x-5 divide-solid divide-x items-center">
-                        <button class="text-xs py-1 px-4 bg-red-700 text-gray-300 rounded">Delete</button>
+<!--                        <button class="text-xs py-1 px-4 bg-red-700 text-gray-300 rounded">Delete</button>-->
+                        <button @click.prevent="form.removeField(field)">
+                            <IconDelete class="w-5 h-5 text-red-950" />
+                        </button>
 
                         <div class="space-x-2 pl-4 flex">
                             <span class="text-xs">Required</span>
@@ -63,5 +74,3 @@ document.addEventListener('click', (event) => {
         </section>
     </div>
 </template>
-
-
