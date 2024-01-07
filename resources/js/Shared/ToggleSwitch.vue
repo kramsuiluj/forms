@@ -1,17 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, toValue } from "vue";
 
 const emit = defineEmits(['send'])
 const checked = ref(false);
 
 function sendCheck() {
+    checked.value = ! toValue(checked);
     emit('send', checked);
 }
 </script>
 
 <template>
-    <label for="toggle" class="switch">
-        <input type="checkbox" id="toggle" v-model="checked" @click="sendCheck">
+    <label for="toggle" class="switch" @click="sendCheck">
+        <input type="checkbox" id="toggle" v-model="checked">
         <span class="slider round"></span>
     </label>
 </template>

@@ -12,17 +12,18 @@ import IconEmptyBox from "@/Shared/Icons/IconEmptyBox.vue";
 import IconUpArrow from "@/Shared/Icons/IconUpArrow.vue";
 import IconDownArrow from "@/Shared/Icons/IconDownArrow.vue";
 import IconOnHover from "@/Shared/Icons/IconOnHover.vue";
-import { useFieldStore } from "@/stores/fieldStore.js";
 import { useCountStore } from "@/stores/countStore.js";
-import {onMounted, ref} from "vue";
 import FormField from "@/Shared/FormField.vue";
+import {ref} from "vue";
 
 const form = useFormStore();
 const fieldActions = useCountStore();
-const itemRefs = ref([]);
-onMounted(() => {
-    console.log(itemRefs.value);
-});
+const opened = true;
+let activeField = ref();
+
+function setActive(field) {
+    activeField.value = field;
+}
 </script>
 
 <template>
@@ -79,7 +80,8 @@ onMounted(() => {
                     </IconOnHover>
                 </div>
 
-                <FormField :field="field" />
+                <FormField :field="field" @click.prevent="setActive(field)" :active="activeField === field" />
+<!--                @setActive="active"-->
 
             </div>
         </div>
